@@ -201,17 +201,22 @@ class Triangle(Shape):
         return self.area
 
     def compute_inner_angles(self):
-        # a**2 = b**2 + c**2 - 2bc cos a -> cos a = (a**2 - b**2 - c**2)/(-2bc)
+        # Calcula los ángulos internos de un triángulo usando la ley de cosenos.
+        # Primero, aseguramos que cada lado tenga su longitud calculada.
         angulos = []
         for i in range(len(self.edges)):
             self.edges[i].compute_length() 
+        # Para cada vértice, calculamos el ángulo opuesto usando la fórmula del coseno.
         for i in range(len(self.edges)):
-            a = self.edges[i].length
-            b = self.edges[i-1].length
-            c = self.edges[i-2].length
+            a = self.edges[i].length  # Lado opuesto al ángulo que queremos calcular
+            b = self.edges[i-1].length  # Lado adyacente 1
+            c = self.edges[i-2].length  # Lado adyacente 2
+            # Calculamos el coseno del ángulo usando la ley de cosenos
             cos_i = ((a**2 - b**2 - c**2) / (-2 * b * c))
+            # Convertimos el coseno a grados y redondeamos
             angulo = round(degrees(acos(cos_i)))
             angulos.append(angulo)
+        # Retornamos la lista de ángulos internos en grados
         return angulos
 
 class Isosceles(Triangle):
@@ -234,6 +239,7 @@ class TriRectangle(Triangle):
     definition : str = "Triangulo con un angulo recto"
     def __init__(self, edges = []):
         super().__init__(edges)
+
 ```
 2. **The restaurant revisted**
  - Add setters and getters to all subclasses for menu item
