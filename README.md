@@ -184,21 +184,22 @@ class Triangle(Shape):
         self.edges = edges
         self.perimeter = 0
         self.area = 0
+        self.angulos = []
     
     def compute_perimeter(self):
-        #print(self.edges)
-        for i in range(len(self.edges)):
-            self.edges[i].compute_length()
-            self.perimeter += self.edges[i].length
-        return self.perimeter
+        if self.perimeter == 0:
+            for i in range(len(self.edges)):
+                self.edges[i].compute_length()
+                self.perimeter += self.edges[i].length
+            self.perimeter
 
     def compute_area(self):
-        self.compute_perimeter()
+        if self.perimeter == 0:
+            self.compute_perimeter()
         semiperimetro = self.perimeter/2
-        self.area = (semiperimetro*(semiperimetro-self.edges[0].length)
+        self.area = round((semiperimetro*(semiperimetro-self.edges[0].length)
                     *(semiperimetro-self.edges[1].length)
-                    *(semiperimetro-self.edges[2].length))**(1/2)
-        return self.area
+                    *(semiperimetro-self.edges[2].length))**(1/2),1)
 
     def compute_inner_angles(self):
         # Calcula los ángulos internos de un triángulo usando la ley de cosenos.
@@ -216,8 +217,8 @@ class Triangle(Shape):
             # Convertimos el coseno a grados y redondeamos
             angulo = round(degrees(acos(cos_i)))
             angulos.append(angulo)
-        # Retornamos la lista de ángulos internos en grados
-        return angulos
+        self.angulos = angulos
+
 
 class Isosceles(Triangle):
 
@@ -240,6 +241,23 @@ class TriRectangle(Triangle):
     def __init__(self, edges = []):
         super().__init__(edges)
 
+
+if __name__ == "__main__":
+    # para un trirectangle
+    p_1 = Point(0,0)
+    p_2 = Point(1,0)
+    p_3 = Point(0,1)
+    l_1 = Line(p_1,p_2)
+    l_2 = Line(p_2,p_3)
+    l_3 = Line(p_3,p_1)
+    triangulo_rectangulo = TriRectangle(edges = [l_1, l_2, l_3])
+    triangulo_rectangulo.compute_inner_angles()
+    triangulo_rectangulo.compute_area()
+    triangulo_rectangulo.compute_perimeter()
+    print(f" angulos :{triangulo_rectangulo.angulos} \n" 
+          + f"area: {triangulo_rectangulo.area} \n"
+          + f"perimetro: {triangulo_rectangulo.perimeter}"
+          )
 ```
 2. **The restaurant revisted**
  - Add setters and getters to all subclasses for menu item
