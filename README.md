@@ -263,8 +263,7 @@ if __name__ == "__main__":
  - Add setters and getters to all subclasses for menu item
  - Override calculate_total_price() according to the order composition (e.g if the order includes a main course apply some disccount on beverages)
  - Add the class Payment() following the class example.
-
-   ```python
+```python
    # Definimos la clase MenuItem como la clase base para los elementos del menu
 class MenuItem:
     def __init__(self, name, price):
@@ -511,4 +510,4 @@ if __name__ == "__main__":
     mi_tarjeta = Tarjeta( 1234356789, 123, "qweasdzxc")
     order = Order(plato_principal, bebidas, postres)
     order.chosse_order()
-   ```
+```
